@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "dev": "node --watch src/server.js",
+    "setup:view": "node scripts/setup-sqlserver-view.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
