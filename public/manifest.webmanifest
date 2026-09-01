@@ -1,0 +1,14 @@
+{
+  "name": "Consulta de Clientes — Cobranza",
+  "short_name": "Cobranza",
+  "description": "Consulta interna de clientes por DNI para agentes de cobranza de campo.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2f4f3",
+  "theme_color": "#0b3d2e",
+  "icons": [
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
