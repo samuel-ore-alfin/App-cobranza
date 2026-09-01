@@ -9,33 +9,16 @@
 import sql from 'mssql';
 import { config } from '../src/config.js';
 
+// Vista pass-through: mismos nombres de columna que la tabla, solo las
+// necesarias. La app funciona igual apuntando a la tabla o a esta vista.
 const VIEW_SQL = `
 CREATE OR ALTER VIEW dbo.VW_BOT_COBRANZA_CAMPO AS
 SELECT
-  CONVERT(varchar(8), c.DNI)                                       AS dni,
-  RTRIM(c.NOMBRECLIENTE)                                           AS nombre_completo,
-  NULLIF(RTRIM(LTRIM(CONVERT(varchar(30), c.TELF_1))), '')         AS telefono_1,
-  NULLIF(RTRIM(LTRIM(CONVERT(varchar(30), c.TELF_2))), '')         AS telefono_2,
-  NULLIF(RTRIM(c.DIRECCION), '')                                   AS direccion,
-  NULLIF(RTRIM(c.DISTRITO), '')                                    AS distrito,
-  NULLIF(RTRIM(c.PROVINCIA), '')                                   AS provincia,
-  NULLIF(RTRIM(c.DEPARTAMENTO), '')                                AS departamento,
-  c.Deuda_Actual                                                  AS monto_adeudado,
-  c.CAPITAL                                                       AS capital,
-  c.Cuota_MayorAtraso                                             AS cuota_mayor_atraso,
-  c.DIA_ATRASO                                                    AS dias_atraso,
-  CONVERT(varchar(10), TRY_CONVERT(date, c.FECHAPROXPAGO), 23)     AS fecha_prox_pago,
-  NULLIF(RTRIM(c.ESTATUS_CLIENTE), '')                             AS estatus_cliente,
-  NULLIF(RTRIM(CONVERT(varchar(50), c.PDP_PENDIENTE_CALL)), '')    AS pdp_pendiente,
-  NULLIF(RTRIM(c.CAMP_LIQUIDACION), 'Sin_Campana')                 AS camp_liquidacion,
-  NULLIF(RTRIM(c.CAMP_REFINANCIADO), 'Sin_Campana')                AS camp_refinanciado,
-  CONVERT(varchar(10), TRY_CONVERT(date, c.FEC_GESTION_CAMPO), 23) AS fec_ultima_gestion_campo,
-  NULLIF(RTRIM(c.REACCION_CAMPO), '')                              AS ultima_reaccion_campo,
-  NULLIF(RTRIM(c.OBS_CAMPO), '')                                   AS ultima_obs_campo,
-  NULLIF(RTRIM(c.NOMBRE_EDC), '')                                  AS gestor_asignado,
-  NULLIF(RTRIM(c.GERENCIA), '')                                    AS gerencia,
-  NULLIF(RTRIM(c.REGION), '')                                      AS region,
-  RIGHT(RTRIM(CONVERT(varchar(50), c.CUENTA_BT)), 4)               AS cuenta_ref_mask
+  c.DNI, c.NOMBRECLIENTE, c.TELF_1, c.TELF_2, c.DIRECCION, c.DISTRITO,
+  c.PROVINCIA, c.DEPARTAMENTO, c.Deuda_Actual, c.CAPITAL, c.Cuota_MayorAtraso,
+  c.DIA_ATRASO, c.FECHAPROXPAGO, c.ESTATUS_CLIENTE, c.PDP_PENDIENTE_CALL,
+  c.CAMP_LIQUIDACION, c.CAMP_REFINANCIADO, c.FEC_GESTION_CAMPO, c.REACCION_CAMPO,
+  c.OBS_CAMPO, c.NOMBRE_EDC, c.GERENCIA, c.REGION, c.CUENTA_BT
 FROM BI..BD_BOT_CLIENTES AS c;
 `;
 

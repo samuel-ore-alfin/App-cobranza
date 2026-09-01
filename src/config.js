@@ -38,11 +38,17 @@ export const config = {
     database: req('SQLSERVER_DATABASE'),
     user: req('SQLSERVER_USER'),
     password: req('SQLSERVER_PASSWORD'),
-    view: (() => {
-      const v = process.env.SQLSERVER_VIEW || 'dbo.VW_BOT_COBRANZA_CAMPO';
-      // Se interpola en el texto SQL: se restringe a un identificador de objeto valido.
+    // Objeto a consultar. Por defecto la tabla base (misma fuente que la v1);
+    // si el DBA crea la vista restringida dbo.VW_BOT_COBRANZA_CAMPO se apunta
+    // aqui a esa vista. Se interpola en el texto SQL -> se restringe a un
+    // identificador de objeto valido.
+    source: (() => {
+      const v =
+        process.env.SQLSERVER_SOURCE ||
+        process.env.SQLSERVER_VIEW ||
+        'BI..BD_BOT_CLIENTES';
       if (!/^[A-Za-z0-9_.\[\]]+$/.test(v)) {
-        throw new Error('SQLSERVER_VIEW contiene caracteres no permitidos');
+        throw new Error('SQLSERVER_SOURCE contiene caracteres no permitidos');
       }
       return v;
     })(),

@@ -1,8 +1,9 @@
 import sql from 'mssql';
 import { config } from '../config.js';
 
-// Pool unico hacia SQL Server. La cuenta configurada debe tener permiso
-// UNICAMENTE SELECT sobre la vista (SQLSERVER_VIEW), nunca sobre la tabla base.
+// Pool unico hacia SQL Server. La cuenta configurada debe ser de SOLO LECTURA
+// sobre SQLSERVER_SOURCE (por defecto la tabla base; idealmente una vista
+// restringida creada por el DBA — ver db/01_sqlserver_create_view.sql).
 
 const poolConfig = {
   server: config.sqlserver.host,
