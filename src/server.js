@@ -36,7 +36,10 @@ app.use(
         frameAncestors: ["'none'"],
         manifestSrc: ["'self'"],
         workerSrc: ["'self'"],
-        upgradeInsecureRequests: [],
+        // Sin upgrade-insecure-requests: rompe la carga de subrecursos cuando
+        // la app se sirve por HTTP (pruebas internas). En produccion el
+        // redirect HTTP->HTTPS lo hace el reverse proxy corporativo, y HSTS
+        // (abajo, solo en production) cubre visitas posteriores.
       },
     },
     hsts: config.env === 'production' ? { maxAge: 15552000, includeSubDomains: true } : false,
