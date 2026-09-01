@@ -1,7 +1,9 @@
 # bot_cobranza_v2 — imagen de produccion
-# Node 20 (alpine): trae fetch global (lo usa @supabase/supabase-js).
+# Node 22 (alpine): trae fetch Y WebSocket globales. @supabase/supabase-js
+# reciente exige WebSocket global al construir el cliente (Node 20 no lo tiene
+# -> el contenedor crasheaba al arrancar).
 # Sin dependencias nativas: bcryptjs y mssql/tedious son JS puro.
-FROM node:20-alpine
+FROM node:22-alpine
 
 ENV NODE_ENV=production
 WORKDIR /app
